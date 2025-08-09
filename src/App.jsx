@@ -20,9 +20,11 @@ function App() {
     // Section fade + slide in
     gsap.utils.toArray(".section").forEach((section) => {
       gsap.from(section, {
-        opacity: 0,
-        y: 80,
-        duration: 1,
+        opacity: 1,
+        // x: -10,
+        //y: -100,
+        scale:5,
+        duration: 3,
         ease: "power3.out",
         scrollTrigger: {
           trigger: section,
@@ -63,7 +65,6 @@ function App() {
   }, []);
 
   return (
-    // <div className="bg-white text-black ">
     <div className="bg-secondary text-black font-anton">
       <HeroSection />
       <ClientsSection />
@@ -72,6 +73,19 @@ function App() {
       <ContactSection />
       <Footer />
     </div>
+
+    // <div>
+    //   <section className="section h-screen bg-gray-200 flex flex-col justify-center items-center">
+    //     <h1 className="animate-item text-4xl font-bold mb-4">Hero Section</h1>
+    //     <p className="animate-item text-lg">Smooth animations with GSAP</p>
+    //   </section>
+    //   <section className="section h-screen bg-white flex flex-col justify-center items-center">
+    //     <h2 className="animate-item text-3xl font-semibold mb-4">About Us</h2>
+    //     <p className="animate-item text-lg max-w-xl text-center">
+    //       This section fades and slides in, while child elements stagger.
+    //     </p>
+    //   </section>
+    // </div>
   );
 
 }
