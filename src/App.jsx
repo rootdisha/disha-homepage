@@ -23,7 +23,7 @@ function App() {
         opacity: 1,
         // x: -10,
         //y: -100,
-        scale:5,
+        scale:3,
         duration: 3,
         ease: "power3.out",
         scrollTrigger: {
@@ -41,7 +41,8 @@ function App() {
           y: 40,
           duration: 0.6,
           stagger: 0.2,
-          ease: "power2.out",
+          // ease: "power2.out",
+          ease: "bounce.out",
           scrollTrigger: {
             trigger: section,
             start: "top 80%"
@@ -62,6 +63,7 @@ function App() {
         }
       });
     });
+
   }, []);
 
   return (
