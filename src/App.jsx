@@ -33,7 +33,7 @@ function App() {
 
   return (
     // <div className="bg-white text-black ">
-    <div className="bg-white text-black font-anton">
+    <div className="bg-secondary text-black font-anton">
       <HeroSection />
       <ClientsSection />
       <AboutSection />
