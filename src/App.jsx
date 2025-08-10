@@ -24,7 +24,7 @@ function App() {
         // x: -10,
         //y: -100,
         scale:3,
-        duration: 3,
+        duration: 5,
         ease: "power3.out",
         scrollTrigger: {
           trigger: section,
@@ -67,12 +67,23 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-secondary text-black font-anton">
-      <HeroSection />
-      <ClientsSection />
-      <AboutSection />
-      <PortfolioSection />
-      <ContactSection />
+    <div className="font-anton">
+      {/* Alternate accent and monochrome as background */}
+      <div className="text-black bg-secondary font-anton">
+        <HeroSection />
+      </div>
+      <div className="text-secondary bg-black font-anton">
+        <ClientsSection />
+      </div>
+      <div className="text-black bg-secondary font-anton">
+        <AboutSection />
+      </div>
+      <div className="text-secondary bg-black font-anton">
+        <PortfolioSection />
+      </div>
+      <div className="text-black bg-secondary font-anton">
+        <ContactSection />
+      </div>
       <Footer />
     </div>
 
