@@ -22,12 +22,12 @@ function App() {
     // Section fade + slide in
     gsap.utils.toArray(".section").forEach((section) => {
       gsap.from(section, {
-        opacity: 0.5,
-        x: -10,
-        y: -100,
+        opacity: 1,
+        x: 0,
+        y: 0,
         scale:3,
-        duration: 5,
-        ease: "power3.out",
+        duration: 3,
+        ease: "back.out",
         scrollTrigger: {
           trigger: section,
           start: "top 80%",
@@ -41,16 +41,34 @@ function App() {
         gsap.from(children, {
           opacity: 0,
           y: 40,
-          duration: 0.6,
+          // delay: 5,
+          duration: 1,
           stagger: 0.2,
-          // ease: "power2.out",
-          ease: "bounce.out",
+          ease: "power2.out",
+          // ease: "bounce.out",
           scrollTrigger: {
             trigger: section,
             start: "top 80%"
           }
         });
       }
+    });
+
+    gsap.utils.toArray(".navbar").forEach((navbar) => {
+      gsap.from(navbar, {
+        opacity: 0,
+        delay: 4,
+        x: -100,
+        y: 0,
+        scale:1,
+        duration: 6,
+        ease: "elastic.out",
+        scrollTrigger: {
+          trigger: navbar,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      });   
     });
 
     // Parallax effect for background elements
@@ -64,15 +82,12 @@ function App() {
           scrub: true
         }
       });
-    });
+    }); // .parallax
 
-  }, []);
+  }, []); // useGSAP
 
   return (
     <div className="font-anton">
-      <div className="text-black bg-secondary font-anton">
-        <Navbar />
-      </div>
       {/* Alternate accent and monochrome as background */}
       <div className="text-black bg-secondary font-anton">
         <HeroSection />

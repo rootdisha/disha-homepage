@@ -13,6 +13,7 @@ export default {
       fontFamily: {
         monument: ['"Monument Extended"', 'sans-serif'],
         anton: ['Anton', 'sans-serif'],
+        lato: ['Lato', 'sans-serif'],
       }
     },
   },
