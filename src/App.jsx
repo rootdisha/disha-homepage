@@ -1,8 +1,10 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react'; // Use useGSAP handles animations better esp in dev
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 
 import HeroSection from './components/HeroSection';
+import Navbar from './components/Navbar';
 import ClientsSection from './components/ClientsSection';
 import AboutSection from './components/AboutSection';
 import PortfolioSection from './components/PortfolioSection';
@@ -16,13 +18,13 @@ gsap.registerPlugin(ScrollTrigger);
 function App() {
   console.log("Sections found:", gsap.utils.toArray(".section"));
 
-  useLayoutEffect(() => {
+  useGSAP(() => {
     // Section fade + slide in
     gsap.utils.toArray(".section").forEach((section) => {
       gsap.from(section, {
-        opacity: 1,
-        // x: -10,
-        //y: -100,
+        opacity: 0.5,
+        x: -10,
+        y: -100,
         scale:3,
         duration: 5,
         ease: "power3.out",
@@ -68,6 +70,9 @@ function App() {
 
   return (
     <div className="font-anton">
+      <div className="text-black bg-secondary font-anton">
+        <Navbar />
+      </div>
       {/* Alternate accent and monochrome as background */}
       <div className="text-black bg-secondary font-anton">
         <HeroSection />
@@ -87,18 +92,6 @@ function App() {
       <Footer />
     </div>
 
-    // <div>
-    //   <section className="section h-screen bg-gray-200 flex flex-col justify-center items-center">
-    //     <h1 className="animate-item text-4xl font-bold mb-4">Hero Section</h1>
-    //     <p className="animate-item text-lg">Smooth animations with GSAP</p>
-    //   </section>
-    //   <section className="section h-screen bg-white flex flex-col justify-center items-center">
-    //     <h2 className="animate-item text-3xl font-semibold mb-4">About Us</h2>
-    //     <p className="animate-item text-lg max-w-xl text-center">
-    //       This section fades and slides in, while child elements stagger.
-    //     </p>
-    //   </section>
-    // </div>
   );
 
 }
