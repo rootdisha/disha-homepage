@@ -1,6 +1,11 @@
 import React, { useEffect, useRef } from "react";
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from "@gsap/react";
+
 import DishaLogo from "/src/assets/disha-logo copy 2.svg";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const App_claude = () => {
   const heroRef = useRef(null);
@@ -79,34 +84,85 @@ const App_claude = () => {
   useGSAP(() => {
     // Simulate GSAP animations with CSS animations and transitions
     const animateOnScroll = () => {
-      const elements = document.querySelectorAll(".animate-on-scroll");
-      elements.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.8) {
-          el.classList.add("animated");
-        }
-      });
+      // const elements = document.querySelectorAll(".animate-on-scroll");
+      // elements.forEach((el) => {
+      //   const rect = el.getBoundingClientRect();
+      //   if (rect.top < window.innerHeight * 0.8) {
+      //     el.classList.add("animated");
+      //   }
+      // });
     };
 
-    // Hero text animation
-    const heroText = heroTextRef.current?.children;
-    if (heroText) {
-      Array.from(heroText).forEach((line, index) => {
-        line.style.opacity = "0";
-        line.style.transform = "translateY(50px)";
-        line.style.animation = `slideInUp 1s ease-out ${index * 0.2}s forwards`;
-      });
-    }
+    let herotl = gsap.timeline();
 
-    // Stagger animations for work items
-    const workItems = workGridRef.current?.children;
-    if (workItems) {
-      Array.from(workItems).forEach((item, index) => {
-        item.style.opacity = "0";
-        item.style.transform = "scale(0.8)";
-        item.style.animation = `scaleIn 0.6s ease-out ${index * 0.1}s forwards`;
-      });
-    }
+    // Instead of CSS keyframes - Hero text animation
+    herotl.from(".hero-line", {
+      // y: 150,
+      x: 150,
+      opacity: 0,
+      duration: 0.5,
+      ease: "back.out",
+      stagger: 0.2,
+    }).from(".navbar", {
+      y: -150,
+      opacity: 0,
+      duration: 1,
+      ease: "back.out",
+      stagger: 0.2,
+    });
+    // Background elements float and pulse
+    herotl.to(".float-animate", {
+      y: -20,
+      x: -10,
+      duration: 3,
+      ease: "power1.inOut",
+      yoyo: true,
+      repeat: -1,
+    });
+    herotl.from(".pulse-animate", {
+      x: -20,
+      y: 10,
+      opacity: 0.5,
+      duration: 3,
+      ease: "power1.inOut",
+      yoyo: true,
+      repeat: -1,
+    });
+    herotl.from(".pulse-animate-line", {
+      y: 10,
+      opacity: 0.5,
+      duration: 2,
+      ease: "power1.inOut",
+      yoyo: true,
+      repeat: -1,
+    });
+
+    // Instead of CSS animation delays keyframe - Work grid animation
+    gsap.from(".work-item", {
+      scale: 0.8,
+      opacity: 0,
+      duration: 0.6,
+      ease: "back.out(1.7)",
+      stagger: {
+        amount: 0.8,
+        from: "start",
+      },
+      scrollTrigger: ".work-grid",
+    });
+
+    gsap.from(".animate-on-scroll", {
+      y: 100,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".animate-on-scroll",
+        start: "top 80%",
+        toggleActions: "play none none reverse"
+      }
+    });
+
+
 
     // Client logos animation
     const clientItems = clientsGridRef.current?.children;
@@ -131,19 +187,6 @@ const App_claude = () => {
   return (
     <>
       <style jsx>{`
-        @keyframes slideInUp {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes scaleIn {
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
 
         @keyframes slideUp {
           to {
@@ -152,44 +195,16 @@ const App_claude = () => {
           }
         }
 
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
-        }
+        // .animate-on-scroll {
+        //   opacity: 0;
+        //   transform: translateY(50px);
+        //   transition: all 0.8s ease-out;
+        // }
 
-        @keyframes pulse {
-          0%,
-          100% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.5;
-          }
-        }
-
-        .float-animation {
-          animation: float 6s ease-in-out infinite;
-        }
-
-        .pulse-animation {
-          animation: pulse 5s ease-in-out infinite;
-        }
-
-        .animate-on-scroll {
-          opacity: 0;
-          transform: translateY(50px);
-          transition: all 0.8s ease-out;
-        }
-
-        .animate-on-scroll.animated {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        // .animate-on-scroll.animated {
+        //   opacity: 1;
+        //   transform: translateY(0);
+        // }
 
         .hover-lift:hover {
           transform: translateY(-10px);
@@ -206,7 +221,7 @@ const App_claude = () => {
         {/* Sticky Navbar */}
         <nav
           ref={navbarRef}
-          className="fixed font-lato top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-md border-b border-gray-800"
+          className="navbar fixed font-lato top-0 left-0 right-0 z-50 bg-black/95 bg-opacity-75 backdrop-blur-md border-b border-gray-800"
         >
           <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             {/* Logo */}
@@ -264,27 +279,27 @@ const App_claude = () => {
         {/* Hero Section */}
         <section
           ref={heroRef}
-          className="min-h-screen flex items-center justify-center relative overflow-hidden"
+          className=" min-h-screen flex items-center justify-center relative overflow-hidden"
         >
           <div className="absolute inset-0 bg-black"></div>
 
           {/* Animated background elements */}
           <div
-            className="absolute top-20 right-20 w-32 h-32 border-2 float-animation"
+            className="float-animate absolute top-20 right-20 w-32 h-32 border-2 "
             style={{ borderColor: "#ED2E2D" }}
           ></div>
           <div
-            className="absolute bottom-32 left-16 w-24 h-24 pulse-animation"
-            style={{ backgroundColor: "#EACF74" }}
+            className="pulse-animate absolute bottom-32 left-16 bg-secondary w-24 h-24 "
           ></div>
-          <div className="absolute top-1/4 right-1/4 w-2 h-2 bg-white pulse-animation"></div>
-
+          <div className="pulse-animate absolute top-1/4 right-1/4 w-4 h-4 bg-white "></div>
+          <div className="float-animate absolute top-2/3 left-5 w-6 h-6 bg-white "></div>
+          {/* Animated hero lines */}
           <div className="relative z-10 text-center px-6">
             <div ref={heroTextRef}>
-              <h1 className="text-6xl font-anton text-left md:text-8xl lg:text-9xl font-black mb-8 leading-tight">
-                <div style={{ color: "#ED2E2D" }}>CREATIVE.</div>
-                <div style={{ color: "#EACF74" }}>IMPACTFUL.</div>
-                <div className="text-white">DIRECTIONAL.</div>
+              <h1 className="hero-line text-6xl font-anton text-left md:text-8xl lg:text-9xl font-black mb-8 leading-tight">
+                <div className="hero-line" style={{ color: "#ED2E2D" }}>CREATIVE.</div>
+                <div className="hero-line" style={{ color: "#EACF74" }}>IMPACTFUL.</div>
+                <div className="hero-line text-white">DIRECTIONAL.</div>
               </h1>
             </div>
             <p className="text-xl font-lato text-right md:text-2xl text-gray-300 max-w-2xl mx-auto mb-12 animate-on-scroll">
@@ -299,7 +314,7 @@ const App_claude = () => {
               DISCOVER MORE
             </button>
           </div>
-          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 pulse-animation">
+          <div className="pulse-animate-line absolute bottom-10 left-1/2 transform -translate-x-1/2 ">
             <div className="w-1 h-16 bg-white rounded-full opacity-50"></div>
           </div>
         </section>
@@ -403,10 +418,10 @@ const App_claude = () => {
             </h2>
             <div
               ref={workGridRef}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              className="work-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
               {works.map((work, index) => (
-                <div key={index} className="group cursor-pointer hover-lift">
+                <div key={index} className="work-item group cursor-pointer hover-lift">
                   <div
                     className="w-full h-64 relative overflow-hidden"
                     style={{ backgroundColor: work.bgColor }}
