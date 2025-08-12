@@ -14,6 +14,8 @@ export default {
         monument: ['"Monument Extended"', 'sans-serif'],
         anton: ['Anton', 'sans-serif'],
         lato: ['Lato', 'sans-serif'],
+        hypesunset: ['Hyperion Sunset','sans-serif'],
+        oxanium: ['Oxanium', 'sans-serif'],
       }
     },
   },

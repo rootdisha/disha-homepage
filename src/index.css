@@ -85,3 +85,11 @@ button:focus-visible {
   font-style: normal;
 }
 
+
+@font-face {
+  font-family: 'Hyperion Sunset';
+  src: url('/src/assets/fonts/hyperion.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+/* 80 100 */
