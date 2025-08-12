@@ -8,7 +8,8 @@ export default {
     extend: {
       colors: {
         primary: '#ED2E2D',
-        secondary: '#EACF74'
+        secondary: '#EACF74',
+        tbd: '#aaaaaa',
       },
       fontFamily: {
         monument: ['"Monument Extended"', 'sans-serif'],

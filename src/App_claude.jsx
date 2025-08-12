@@ -21,78 +21,64 @@ const App_claude = () => {
   const workGridRef = useRef(null);
   const clientsGridRef = useRef(null);
 
-  // Mock client logos
+  // Client list
   const clients = [
-    "Nike",
-    "Apple",
-    "Google",
-    "Microsoft",
-    "Amazon",
-    "Meta",
-    "Tesla",
-    "Netflix",
-    "Spotify",
-    "Adobe",
-    "Airbnb",
-    "Uber",
-    "Twitter",
-    "LinkedIn",
-    "Pinterest",
-    "Dropbox",
-    "Slack",
-    "Zoom",
-    "Shopify",
-    "PayPal",
-    "Square",
-    "Stripe",
-    "Mailchimp",
-    "Canva",
-    "Figma",
-    "Notion",
-    "Discord",
-    "TikTok",
-    "Snapchat",
-    "Reddit",
-    "Medium",
-    "Behance",
-    "Dribbble",
+    // Page 1
+    "ARC",
+    "Infosys",
+    "Sri Krishna Sweets",
+    "Bloom",
+    "Cauvery",
+    "HomeRunners",
+    "RRR",
+    "Welona",
+    "GBR",
+    "Happy Tods",
+    "Dr. Dinesh's Skin & Hair Clinic",
+    "Mattramas",
+    "RK Hospital",
+    "HSB",
+    "Asian Bowl",
+    "Siddhagiri Sal",
+    "Tekraa",
+    "Amara",
+    "Sculpt",
+    // Page 2
+    "Anka",
+    "Abhijay",
+    "Covalsys",
+    "Klean",
+    "Kushi Hygiene Services",
+    "Kushi",
+    "Nandi's",
+    "Quantic Edges",
+    "Spectalent",
+    "VKN",
+    "Annai Hospital",
+    "Sudharma",
+    "Jose",
+    "Ruthra Polyclinic",
+    "Silk",
   ];
 
   // Mock work projects - brand colors only
   const works = [
-    { title: "Brand Revolution", category: "Rebranding", bgColor: "#ED2E2D" },
-    {
-      title: "Digital Transformation",
-      category: "Strategy",
-      bgColor: "#000000",
-    },
-    { title: "Visual Identity", category: "Design", bgColor: "#EACF74" },
-    { title: "Market Positioning", category: "Strategy", bgColor: "#FFFFFF" },
-    { title: "Campaign Launch", category: "Marketing", bgColor: "#ED2E2D" },
-    { title: "Brand Guidelines", category: "Design", bgColor: "#EACF74" },
-    { title: "Logo Redesign", category: "Branding", bgColor: "#000000" },
+    { title: "Print Collateral", category: "Design", bgColor: "#EACF74" },
+    { title: "Commercial Ads", category: "Strategy", bgColor: "#FFFFFF" },
+    { title: "Website Building", category: "Digital", bgColor: "#EACF74" },
+    { title: "Billboards", category: "Marketing", bgColor: "#000000" },
     { title: "Website Overhaul", category: "Digital", bgColor: "#FFFFFF" },
     { title: "Social Strategy", category: "Marketing", bgColor: "#ED2E2D" },
-    { title: "Print Collateral", category: "Design", bgColor: "#EACF74" },
-    { title: "Brand Audit", category: "Strategy", bgColor: "#000000" },
-    { title: "Voice & Tone", category: "Branding", bgColor: "#FFFFFF" },
     { title: "Packaging Design", category: "Design", bgColor: "#ED2E2D" },
-    { title: "Event Branding", category: "Marketing", bgColor: "#EACF74" },
-    { title: "Brand Story", category: "Strategy", bgColor: "#000000" },
+    { title: "Brand Revolution", category: "Rebranding", bgColor: "#aaaaaa" },
+    { title: "Digital Transformation", category: "Strategy", bgColor: "#aaaaaa" },
+    { title: "Brand Audit", category: "Strategy", bgColor: "#aaaaaa" },
+    { title: "Voice & Tone", category: "Branding", bgColor: "#aaaaaa" },
+    { title: "Event Branding", category: "Marketing", bgColor: "#aaaaaa" },
+    { title: "Brand Story", category: "Strategy", bgColor: "#aaaaaa" },
   ];
 
   useGSAP(() => {
-    // Simulate GSAP animations with CSS animations and transitions
-    const animateOnScroll = () => {
-      // const elements = document.querySelectorAll(".animate-on-scroll");
-      // elements.forEach((el) => {
-      //   const rect = el.getBoundingClientRect();
-      //   if (rect.top < window.innerHeight * 0.8) {
-      //     el.classList.add("animated");
-      //   }
-      // });
-    };
-
     let herotl = gsap.timeline();
 
     // Instead of CSS keyframes - Hero text animation
@@ -162,22 +148,103 @@ const App_claude = () => {
       }
     });
 
+    // Some hover effects //
+    // Hover lift
+    gsap.set(".hover-lift", { transformOrigin: "center bottom" });
+
+    document.querySelectorAll(".hover-lift").forEach((element) => {
+      element.addEventListener("mouseenter", () => {
+        gsap.to(element, {
+          y: -10,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      });
+
+      element.addEventListener("mouseleave", () => {
+        gsap.to(element, {
+          y: 0,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      });
+    });
+    // Scale on hover
+    gsap.set(".scale-on-hover", { transformOrigin: "center" });
+
+    document.querySelectorAll(".scale-on-hover").forEach((element) => {
+      element.addEventListener("mouseenter", () => {
+        gsap.to(element, {
+          scale: 1.05,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      });
+
+      element.addEventListener("mouseleave", () => {
+        gsap.to(element, {
+          scale: 1,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      });
+    });
+
+    // Instead of CSS @keyframes slideUp
+    gsap.from(".slide-up-element", {
+      y: 30,
+      opacity: 0,
+      duration: 0.5,
+      ease: "power2.out",
+      stagger: 0.05, // This matches the 0.05s delay you had in the original
+    });
+
+//    // If you want it triggered on scroll (like your client logos)
+    // gsap.from(".client-item", {
+    //   y: 30,
+    //   opacity: 0,
+    //   duration: 0.5,
+    //   ease: "power2.out",
+    //   stagger: 0.05,
+    //   scrollTrigger: {
+    //     trigger: ".clients-grid",
+    //     start: "top 80%",
+    //     toggleActions: "play none none reverse"
+    //   }
+    // });
+
+    // // OR Using timeline for better control over sequencing
+    // let tl = gsap.timeline({
+    //   scrollTrigger: {
+    //     trigger: ".clients-grid",
+    //     start: "top 80%"
+    //   }
+    // });
+
+    // tl.from(".client-item", {
+    //   y: 30,
+    //   opacity: 0,
+    //   duration: 0.5,
+    //   ease: "power2.out",
+    //   stagger: {
+    //     amount: 1.5,  // Total time to stagger all items
+    //     from: "start"
+    //   }
+    // });
 
 
     // Client logos animation
-    const clientItems = clientsGridRef.current?.children;
-    if (clientItems) {
-      Array.from(clientItems).forEach((item, index) => {
-        item.style.opacity = "0";
-        item.style.transform = "translateY(30px)";
-        item.style.animation = `slideUp 0.5s ease-out ${
-          index * 0.05
-        }s forwards`;
-      });
-    }
+    // const clientItems = clientsGridRef.current?.children;
+    // if (clientItems) {
+    //   Array.from(clientItems).forEach((item, index) => {
+    //     item.style.opacity = "0";
+    //     item.style.transform = "translateY(30px)";
+    //     item.style.animation = `slideUp 0.5s ease-out ${
+    //       index * 0.05
+    //     }s forwards`;
+    //   });
+    // }
 
-    window.addEventListener("scroll", animateOnScroll);
-    return () => window.removeEventListener("scroll", animateOnScroll);
   }, []);
 
   const scrollToSection = (ref) => {
@@ -187,33 +254,11 @@ const App_claude = () => {
   return (
     <>
       <style jsx>{`
-
         @keyframes slideUp {
           to {
             opacity: 1;
             transform: translateY(0);
           }
-        }
-
-        // .animate-on-scroll {
-        //   opacity: 0;
-        //   transform: translateY(50px);
-        //   transition: all 0.8s ease-out;
-        // }
-
-        // .animate-on-scroll.animated {
-        //   opacity: 1;
-        //   transform: translateY(0);
-        // }
-
-        .hover-lift:hover {
-          transform: translateY(-10px);
-          transition: transform 0.3s ease;
-        }
-
-        .scale-on-hover:hover {
-          transform: scale(1.05);
-          transition: transform 0.3s ease;
         }
       `}</style>
 
@@ -227,10 +272,6 @@ const App_claude = () => {
             {/* Logo */}
             <div className="flex items-center space-x-3 hover-lift">
               <div className="relative w-12 h-12">
-                {/* <div className="absolute inset-0 border-2 rounded-full" style={{ borderColor: '#ED2E2D', borderRightColor: '#EACF74', borderTopColor: '#EACF74' }}></div>
-                <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
-                  <div className="w-1 h-6" style={{ backgroundColor: '#ED2E2D' }}></div>
-                </div> */}
                 <img src={DishaLogo} alt="Disha Logo" />
               </div>
               <div
@@ -476,10 +517,10 @@ const App_claude = () => {
             </h2>
             <div
               ref={clientsGridRef}
-              className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8"
+              className="client-grid grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8"
             >
               {clients.map((client, index) => (
-                <div key={index} className="group cursor-pointer hover-lift">
+                <div key={index} className="client-item slide-up-element  group cursor-pointer ">
                   <div className="bg-gray-900 hover:bg-gray-800 p-6 h-24 flex items-center justify-center transition-all duration-300 border-2 border-transparent hover:border-red-600">
                     <div className="text-white font-bold text-sm group-hover:text-yellow-400 transition-colors duration-300">
                       {client}
