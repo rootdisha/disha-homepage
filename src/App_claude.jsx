@@ -192,39 +192,23 @@ const App_claude = () => {
       });
     });
 
-
-   // If you want it triggered on scroll (like your client logos)
-    gsap.from(".client-item", {
+    // Client logos fading in on scroll. Using timeline for better control over sequencing
+    let tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".clients-grid",
+        start: "top 80%"
+      }
+    });
+    tl.from(".client-item", {
       y: 30,
       opacity: 0,
       duration: 0.5,
       ease: "power2.out",
-      stagger: 0.05,
-      scrollTrigger: {
-        trigger: ".clients-grid",
-        start: "top 80%",
-        // toggleActions: "play none none reverse"
+      stagger: {
+        amount: 1.5,  // Total time to stagger all items
+        from: "start"
       }
     });
-
-    // // OR Using timeline for better control over sequencing
-    // let tl = gsap.timeline({
-    //   scrollTrigger: {
-    //     trigger: ".clients-grid",
-    //     start: "top 80%"
-    //   }
-    // });
-
-    // tl.from(".client-item", {
-    //   y: 30,
-    //   opacity: 0,
-    //   duration: 0.5,
-    //   ease: "power2.out",
-    //   stagger: {
-    //     amount: 1.5,  // Total time to stagger all items
-    //     from: "start"
-    //   }
-    // });
 
   }, []);
 
@@ -555,8 +539,8 @@ const App_claude = () => {
             </div>
 
             <button
-              className="bg-red-600 hover:bg-red-700 text-whitetwo px-12 py-6 text-xl font-bold transition-all duration-300 scale-on-hover animate-on-scroll"
-              style={{ backgroundColor: "#ED2E2D" }}
+              className="bg-primary hover:bg-red-700 text-whitetwo px-12 py-6 text-xl font-bold transition-all duration-300 scale-on-hover"
+              
             >
               START A PROJECT
             </button>
