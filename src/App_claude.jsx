@@ -525,7 +525,7 @@ const App_claude = () => {
                 >
                   PHONE
                 </div>
-                <div className="text-gray-300">+91 98765 43210</div>
+                <div className="text-gray-300">+91 00000 00000</div>
               </div>
               <div className="text-center animate-on-scroll hover-lift">
                 <div
@@ -534,7 +534,7 @@ const App_claude = () => {
                 >
                   LOCATION
                 </div>
-                <div className="text-gray-300">Kochi, Kerala</div>
+                <div className="text-gray-300">Chennai/Bangalore</div>
               </div>
             </div>
 
@@ -555,7 +555,7 @@ const App_claude = () => {
                 <img src={DishaLogo} alt="Disha Logo" />
               </div>
               <div
-                className="text-lg font-bold font-hypesunset"
+                className="text-lg font-hypesunset"
                 style={{ color: "#ED2E2D" }}
               >
                 Disha Medias
