@@ -136,16 +136,18 @@ const App_claude = () => {
       scrollTrigger: ".work-grid",
     });
 
-    gsap.from(".animate-on-scroll", {
-      y: 100,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".animate-on-scroll",
-        start: "top 80%",
-        toggleActions: "play none none reverse"
-      }
+    gsap.utils.toArray(".animate-on-scroll").forEach(element => {
+      gsap.from(element, {
+        y: 100,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: element,  
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      });
     });
 
     // Some hover effects //
@@ -190,28 +192,20 @@ const App_claude = () => {
       });
     });
 
-    // Instead of CSS @keyframes slideUp
-    gsap.from(".slide-up-element", {
+
+   // If you want it triggered on scroll (like your client logos)
+    gsap.from(".client-item", {
       y: 30,
       opacity: 0,
       duration: 0.5,
       ease: "power2.out",
-      stagger: 0.05, // This matches the 0.05s delay you had in the original
+      stagger: 0.05,
+      scrollTrigger: {
+        trigger: ".clients-grid",
+        start: "top 80%",
+        // toggleActions: "play none none reverse"
+      }
     });
-
-//    // If you want it triggered on scroll (like your client logos)
-    // gsap.from(".client-item", {
-    //   y: 30,
-    //   opacity: 0,
-    //   duration: 0.5,
-    //   ease: "power2.out",
-    //   stagger: 0.05,
-    //   scrollTrigger: {
-    //     trigger: ".clients-grid",
-    //     start: "top 80%",
-    //     toggleActions: "play none none reverse"
-    //   }
-    // });
 
     // // OR Using timeline for better control over sequencing
     // let tl = gsap.timeline({
@@ -232,19 +226,6 @@ const App_claude = () => {
     //   }
     // });
 
-
-    // Client logos animation
-    // const clientItems = clientsGridRef.current?.children;
-    // if (clientItems) {
-    //   Array.from(clientItems).forEach((item, index) => {
-    //     item.style.opacity = "0";
-    //     item.style.transform = "translateY(30px)";
-    //     item.style.animation = `slideUp 0.5s ease-out ${
-    //       index * 0.05
-    //     }s forwards`;
-    //   });
-    // }
-
   }, []);
 
   const scrollToSection = (ref) => {
@@ -253,20 +234,11 @@ const App_claude = () => {
 
   return (
     <>
-      <style jsx>{`
-        @keyframes slideUp {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
-
-      <div className="bg-black2 text-white2 min-h-screen overflow-x-hidden">
+      <div className="bg-bgmain text-whitetwo min-h-screen overflow-x-hidden">
         {/* Sticky Navbar */}
         <nav
           ref={navbarRef}
-          className="navbar fixed font-lato top-0 left-0 right-0 z-50 bg-black/95 bg-opacity-75 backdrop-blur-md border-b border-gray-800"
+          className="navbar fixed font-lato top-0 left-0 right-0 z-50 bg-bgother/65 bg-opacity-75 backdrop-blur-md border-b border-gray-800"
         >
           <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             {/* Logo */}
@@ -275,7 +247,7 @@ const App_claude = () => {
                 <img src={DishaLogo} alt="Disha Logo" />
               </div>
               <div
-                className="text-xl font-black2 font-hypesunset"
+                className="text-xl font-bgmain font-hypesunset"
                 style={{ color: "#ED2E2D" }}
               >
                 Disha Medias
@@ -322,7 +294,7 @@ const App_claude = () => {
           ref={heroRef}
           className=" min-h-screen flex items-center justify-center relative overflow-hidden"
         >
-          <div className="absolute inset-0 bg-black2"></div>
+          <div className="absolute inset-0 bg-bgmain"></div>
 
           {/* Animated background elements */}
           <div
@@ -332,15 +304,15 @@ const App_claude = () => {
           <div
             className="pulse-animate absolute bottom-32 left-16 bg-secondary w-24 h-24 "
           ></div>
-          <div className="pulse-animate absolute top-1/4 right-1/4 w-4 h-4 bg-white2 "></div>
-          <div className="float-animate absolute top-2/3 left-5 w-6 h-6 bg-white2 "></div>
+          <div className="pulse-animate absolute top-1/4 right-1/4 w-4 h-4 bg-whitetwo "></div>
+          <div className="float-animate absolute top-2/3 left-5 w-6 h-6 bg-whitetwo "></div>
           {/* Animated hero lines */}
           <div className="relative z-10 text-center px-6">
             <div ref={heroTextRef}>
-              <h1 className="hero-line text-6xl font-anton text-left md:text-8xl lg:text-9xl font-black2 mb-8 leading-tight">
+              <h1 className="hero-title text-6xl md:text-8xl lg:text-9xl font-anton text-left font-bgmain mb-8 leading-tight">
                 <div className="hero-line" style={{ color: "#ED2E2D" }}>CREATIVE.</div>
                 <div className="hero-line" style={{ color: "#EACF74" }}>IMPACTFUL.</div>
-                <div className="hero-line text-white2">DIRECTIONAL.</div>
+                <div className="hero-line text-whitetwo">DIRECTIONAL.</div>
               </h1>
             </div>
             <p className="text-xl font-lato text-right md:text-2xl text-gray-300 max-w-2xl mx-auto mb-12 animate-on-scroll">
@@ -349,14 +321,14 @@ const App_claude = () => {
             </p>
             <button
               onClick={() => scrollToSection(aboutRef)}
-              className="bg-red-600 hover:bg-red-700 text-white2 px-8 py-4 text-lg font-bold transition-all duration-300 scale-on-hover animate-on-scroll"
+              className="bg-red-600 hover:bg-red-700 text-whitetwo px-8 py-4 text-lg font-bold transition-all duration-300 scale-on-hover animate-on-scroll"
               style={{ backgroundColor: "#ED2E2D" }}
             >
               DISCOVER MORE
             </button>
           </div>
           <div className="pulse-animate-line absolute bottom-10 left-1/2 transform -translate-x-1/2 ">
-            <div className="w-1 h-16 bg-white2 rounded-full opacity-50"></div>
+            <div className="w-1 h-16 bg-whitetwo rounded-full opacity-50"></div>
           </div>
         </section>
 
@@ -364,7 +336,7 @@ const App_claude = () => {
         <section ref={aboutRef} className="min-h-screen py-20 px-6 font-anton">
           <div className="max-w-7xl mx-auto">
             <h2
-              className="text-5xl md:text-7xl font-black2 mb-16 text-center animate-on-scroll"
+              className="section-heading text-5xl md:text-7xl font-bgmain mb-16 text-center animate-on-scroll"
               style={{ color: "#ED2E2D" }}
             >
               ABOUT US
@@ -396,7 +368,7 @@ const App_claude = () => {
                 >
                   <div className="text-center hover-lift">
                     <div
-                      className="text-3xl font-black2 mb-2"
+                      className="text-3xl font-bgmain mb-2"
                       style={{ color: "#ED2E2D" }}
                     >
                       150+
@@ -407,7 +379,7 @@ const App_claude = () => {
                   </div>
                   <div className="text-center hover-lift">
                     <div
-                      className="text-3xl font-black2 mb-2"
+                      className="text-3xl font-bgmain mb-2"
                       style={{ color: "#EACF74" }}
                     >
                       8
@@ -417,7 +389,7 @@ const App_claude = () => {
                     </div>
                   </div>
                   <div className="text-center hover-lift">
-                    <div className="text-3xl font-black2 mb-2 text-white2">
+                    <div className="text-3xl font-bgmain mb-2 text-whitetwo">
                       95%
                     </div>
                     <div className="text-sm text-gray-400">
@@ -431,13 +403,13 @@ const App_claude = () => {
                   className="w-full h-96 relative overflow-hidden hover-lift"
                   style={{ backgroundColor: "#ED2E2D" }}
                 >
-                  <div className="absolute bottom-8 left-8 text-white2">
+                  <div className="absolute bottom-8 left-8 text-whitetwo">
                     <div className="text-2xl font-bold">BRAND POWER</div>
                     <div className="text-sm opacity-75">
                       Unleash Your Potential
                     </div>
                   </div>
-                  <div className="absolute top-8 right-8 w-16 h-16 border-4 border-white2 float-animation"></div>
+                  <div className="absolute top-8 right-8 w-16 h-16 border-4 border-whitetwo float-animate"></div>
                 </div>
               </div>
             </div>
@@ -447,13 +419,13 @@ const App_claude = () => {
         {/* Work Section */}
         <section
           ref={workRef}
-          className="min-h-screen py-20 px-6 font-lato bg-black4"
+          className="min-h-screen py-20 px-6 font-lato bg-bgother"
           // style={{ backgroundColor: "#1a1a1a" }}
         >
           <div className="max-w-7xl mx-auto">
             <h2
-              className="text-5xl font-anton md:text-7xl mb-16 text-center animate-on-scroll"
-              style={{ color: "#EACF74" }}
+              className="section-heading text-5xl md:text-7xl font-anton text-secondary  mb-16 text-center animate-on-scroll"
+              
             >
               OUR WORK
             </h2>
@@ -480,8 +452,8 @@ const App_claude = () => {
                       <div
                         className={`text-xl font-bold ${
                           work.bgColor === "#FFFFFF"
-                            ? "text-black2"
-                            : "text-white2"
+                            ? "text-bgmain"
+                            : "text-whitetwo"
                         }`}
                       >
                         {work.title}
@@ -510,19 +482,19 @@ const App_claude = () => {
         <section ref={clientsRef} className="py-20 px-6">
           <div className="max-w-7xl mx-auto">
             <h2
-              className="text-5xl font-anton md:text-7xl font-black2 mb-16 text-center animate-on-scroll"
+              className="section-heading text-5xl font-anton md:text-7xl font-bgmain mb-16 text-center animate-on-scroll"
               style={{ color: "#ED2E2D" }}
             >
               OUR CLIENTS
             </h2>
             <div
               ref={clientsGridRef}
-              className="client-grid grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8"
+              className="clients-grid grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8"
             >
               {clients.map((client, index) => (
                 <div key={index} className="client-item slide-up-element  group cursor-pointer ">
                   <div className="bg-gray-900 hover:bg-gray-800 p-6 h-24 flex items-center justify-center transition-all duration-300 border-2 border-transparent hover:border-red-600">
-                    <div className="text-white2 font-bold text-sm group-hover:text-yellow-400 transition-colors duration-300">
+                    <div className="text-whitetwo font-bold text-sm group-hover:text-yellow-400 transition-colors duration-300">
                       {client}
                     </div>
                   </div>
@@ -535,16 +507,16 @@ const App_claude = () => {
         {/* Contact Section */}
         <section
           ref={contactRef}
-          className="min-h-screen py-20 px-6 bg-black2 font-lato"
+          className="min-h-screen py-20 px-6 bg-bgmain font-lato"
         >
           <div className="max-w-4xl mx-auto text-center">
             <h2
-              className="text-5xl font-anton md:text-7xl font-black2 mb-8 animate-on-scroll"
+              className="section-heading text-5xl font-anton md:text-7xl font-bgmain mb-8 animate-on-scroll"
               style={{ color: "#EACF74" }}
             >
               LET'S CREATE
             </h2>
-            <h3 className="text-3xl md:text-5xl font-bold mb-12 text-white2 animate-on-scroll">
+            <h3 className="text-3xl md:text-5xl font-bold mb-12 text-whitetwo animate-on-scroll">
               Something Extraordinary
             </h3>
             <p className="text-xl text-gray-300 mb-16 max-w-2xl mx-auto animate-on-scroll">
@@ -583,7 +555,7 @@ const App_claude = () => {
             </div>
 
             <button
-              className="bg-red-600 hover:bg-red-700 text-white2 px-12 py-6 text-xl font-bold transition-all duration-300 scale-on-hover animate-on-scroll"
+              className="bg-red-600 hover:bg-red-700 text-whitetwo px-12 py-6 text-xl font-bold transition-all duration-300 scale-on-hover animate-on-scroll"
               style={{ backgroundColor: "#ED2E2D" }}
             >
               START A PROJECT
@@ -592,7 +564,7 @@ const App_claude = () => {
         </section>
 
         {/* Footer */}
-        <footer className="bg-black2 border-t border-gray-800 py-12 px-6 font-lato">
+        <footer className="bg-bgmain border-t border-gray-800 py-12 px-6 font-lato">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-3 mb-4 md:mb-0">
               <div className="relative w-8 h-8">

@@ -9,10 +9,10 @@ export default {
       colors: {
         primary: '#ED2E2D',
         secondary: '#EACF74',
-        tbd: '#aaaaaa',
-        black2: '#2D2C2E',
-        black4: '1a1a1a',
-        white2: '#FAF5E6',
+        tbd: '#aaaaaa', // parts marked as TBD
+        bgmain: '#2D2C2E', // main background
+        bgother: '#464548',  // nav bar
+        whitetwo: '#FAF5E6',
       },
       fontFamily: {
         monument: ['"Monument Extended"', 'sans-serif'],
