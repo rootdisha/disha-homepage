@@ -18,7 +18,7 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
   return (
     <nav
       ref={navbarRef}
-      className="navbar fixed font-lato top-0 left-0 right-0 z-50 bg-bgother/65 bg-opacity-75 backdrop-blur-md border-b border-gray-800"
+      className="navbar fixed font-lato top-0 left-0 right-0 z-50 bg-primarytwo/65 bg-opacity-75 backdrop-blur-md border-b border-gray-800"
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
