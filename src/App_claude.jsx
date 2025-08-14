@@ -83,6 +83,15 @@ const App_claude = () => {
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
+    // Kill all existing ScrollTriggers to prevent conflicts
+    ScrollTrigger.killAll();
+    
+    // Set default from values to prevent blank screens
+    gsap.set(".animate-on-scroll", { opacity: 1, y: 0 });
+    gsap.set(".client-item", { opacity: 1, y: 0 });
+    gsap.set(".work-item", { opacity: 1, y: 0 });
+
+
     // Create responsive animation values
     const getAnimationDistance = () => {
       return window.innerWidth < 768 ? 50 : 100; // Smaller values for mobile
@@ -145,20 +154,59 @@ const App_claude = () => {
       repeat: -1,
     });
 
-    gsap.utils.toArray(".animate-on-scroll").forEach(element => {
-      gsap.from(element, {
-        y: getAnimationDistance(),
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.out",
+    // Wait for DOM to be ready, then add scroll animations
+    gsap.delayedCall(0.1, () => {
+      gsap.utils.toArray(".animate-on-scroll").forEach(element => {
+        gsap.from(element, {
+          y: getAnimationDistance(),
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: element,
+            start: "top 85%", // Earlier trigger on mobile
+            end: "bottom 15%",
+            toggleActions: "play none none reverse",
+            // Add this for debugging
+            markers: false, // Set to true for debugging
+            onToggle: self => console.log("toggled, isActive:", self.isActive),
+          }
+        });
+      });
+
+      // Client grid animation. logos fading in on scroll. Using timeline for better control over sequencing
+      let tl = gsap.timeline({
         scrollTrigger: {
-          trigger: element,
-          start: "top 85%", // Earlier trigger on mobile
-          end: "bottom 15%",
-          toggleActions: "play none none reverse",
-          // Add this for debugging
-          markers: false, // Set to true for debugging
-          onToggle: self => console.log("toggled, isActive:", self.isActive),
+          trigger: ".clients-grid",
+          start: "top 90%"
+        }
+      });
+      tl.from(".client-item", {
+        y: window.innerWidth < 768 ? 20 : 30,
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.out",
+        stagger: {
+          amount: window.innerWidth < 768 ? 1 : 1.5,  // Total time to stagger all items
+          from: "start"
+        }
+      });
+
+      // Work grid animation
+      tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".work-grid",
+          start: "top 90%"
+        }
+      });
+      tl.from(".work-item", {
+        y: window.innerWidth < 768 ? 20 : 30,
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.out",
+        stagger: {
+          amount: window.innerWidth < 768 ? 1 : 1.5,  // Total time to stagger all items
+          from: "start"
         }
       });
     });
@@ -205,41 +253,10 @@ const App_claude = () => {
       });
     });
 
-    // Client grid animation. logos fading in on scroll. Using timeline for better control over sequencing
-    let tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".clients-grid",
-        start: "top 80%"
-      }
-    });
-    tl.from(".client-item", {
-      y: window.innerWidth < 768 ? 20 : 30,
-      opacity: 0,
-      duration: 0.5,
-      ease: "power2.out",
-      stagger: {
-        amount: window.innerWidth < 768 ? 1 : 1.5,  // Total time to stagger all items
-        from: "start"
-      }
-    });
 
-    // Work grid animation
-    tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".work-grid",
-        start: "top 80%"
-      }
-    });
-    tl.from(".work-item", {
-      y: window.innerWidth < 768 ? 20 : 30,
-      opacity: 0,
-      duration: 0.5,
-      ease: "power2.out",
-      stagger: {
-        amount: window.innerWidth < 768 ? 1 : 1.5,  // Total time to stagger all items
-        from: "start"
-      }
-    });
+
+    // Refresh ScrollTrigger after everything is set up
+    ScrollTrigger.refresh();
 
   }, [mobileMenuOpen]);
 
