@@ -42,7 +42,7 @@ const App = () => {
         scrollToSection={scrollToSection}
         mobileMenuOpen={mobileMenuOpen}
         toggleMobileMenu={toggleMobileMenu}
-        refs={{ heroRef, aboutRef, workRef, clientsRef, contactRef }}
+        refs={{ heroRef, aboutRef, capabilitiesRef, workRef, clientsRef, contactRef }}
       />
       
       <HeroSection 
