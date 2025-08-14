@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, {useRef, useState} from "react";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from "@gsap/react";
@@ -14,6 +14,9 @@ const App_claude = () => {
   const workRef = useRef(null);
   const clientsRef = useRef(null);
   const contactRef = useRef(null);
+
+  // Mobile menu state
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Animation refs
   const heroTextRef = useRef(null);
@@ -80,6 +83,19 @@ const App_claude = () => {
   ];
 
   useGSAP(() => {
+    // Mobile menu animations
+    if (mobileMenuOpen) {
+      gsap.fromTo(".mobile-menu", 
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
+      );
+      gsap.fromTo(".mobile-menu-item",
+        { opacity: 0, x: -30 },
+        { opacity: 1, x: 0, duration: 0.3, stagger: 0.1, ease: "power2.out" }
+      );
+    }
+
+
     let herotl = gsap.timeline();
 
     // Instead of CSS keyframes - Hero text animation
@@ -97,6 +113,7 @@ const App_claude = () => {
       ease: "back.out",
       stagger: 0.2,
     });
+
     // Background elements float and pulse
     herotl.to(".float-animate", {
       y: -20,
@@ -216,10 +233,15 @@ const App_claude = () => {
       }
     });
 
-  }, []);
+  }, [mobileMenuOpen]);
 
   const scrollToSection = (ref) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
+    setMobileMenuOpen(false); // Close mobile menu after navigation
+  };
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
   return (
@@ -244,6 +266,7 @@ const App_claude = () => {
               </div>
             </div>
 
+            {/* Desktop Navigation */}
             <div className="hidden md:flex space-x-8">
               <button
                 onClick={() => scrollToSection(heroRef)}
@@ -276,7 +299,67 @@ const App_claude = () => {
                 CONTACT
               </button>
             </div>
+
+            {/* Hamburger Button - Mobile Only */}
+            <button
+              onClick={toggleMobileMenu}
+              className="md:hidden relative w-8 h-8 flex flex-col justify-center items-center focus:outline-none scale-on-hover"
+            >
+              <span
+                className={`block w-6 h-0.5 bg-whitetwo transition-all duration-300 ${
+                  mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''
+                }`}
+              ></span>
+              <span
+                className={`block w-6 h-0.5 bg-whitetwo my-1 transition-all duration-300 ${
+                  mobileMenuOpen ? 'opacity-0' : 'opacity-100'
+                }`}
+              ></span>
+              <span
+                className={`block w-6 h-0.5 bg-whitetwo transition-all duration-300 ${
+                  mobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''
+                }`}
+              ></span>
+            </button>
           </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="mobile-menu md:hidden bg-bgother/95 backdrop-blur-md border-t border-gray-700">
+              <div className="px-6 py-4 space-y-4">
+                <button
+                  onClick={() => scrollToSection(heroRef)}
+                  className="mobile-menu-item block w-full text-left text-whitetwo hover:text-secondary transition-colors font-bold py-2 text-lg"
+                >
+                  HOME
+                </button>
+                <button
+                  onClick={() => scrollToSection(aboutRef)}
+                  className="mobile-menu-item block w-full text-left text-whitetwo hover:text-secondary transition-colors font-bold py-2 text-lg"
+                >
+                  ABOUT
+                </button>
+                <button
+                  onClick={() => scrollToSection(workRef)}
+                  className="mobile-menu-item block w-full text-left text-whitetwo hover:text-secondary transition-colors font-bold py-2 text-lg"
+                >
+                  WORK
+                </button>
+                <button
+                  onClick={() => scrollToSection(clientsRef)}
+                  className="mobile-menu-item block w-full text-left text-whitetwo hover:text-secondary transition-colors font-bold py-2 text-lg"
+                >
+                  CLIENTS
+                </button>
+                <button
+                  onClick={() => scrollToSection(contactRef)}
+                  className="mobile-menu-item block w-full text-left text-whitetwo hover:text-secondary transition-colors font-bold py-2 text-lg"
+                >
+                  CONTACT
+                </button>
+              </div>
+            </div>
+          )}
         </nav>
 
         {/* Hero Section */}
