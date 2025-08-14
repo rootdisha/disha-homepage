@@ -7,6 +7,7 @@ import DishaLogo from "/src/assets/disha-logo copy 2.svg";
 
 gsap.registerPlugin(ScrollTrigger);
 
+
 const App_claude = () => {
   const heroRef = useRef(null);
   const aboutRef = useRef(null);
@@ -123,19 +124,6 @@ const App_claude = () => {
       repeat: -1,
     });
 
-    // Instead of CSS animation delays keyframe - Work grid animation
-    gsap.from(".work-item", {
-      scale: 0.8,
-      opacity: 0,
-      duration: 0.6,
-      ease: "back.out(1.7)",
-      stagger: {
-        amount: 0.8,
-        from: "start",
-      },
-      scrollTrigger: ".work-grid",
-    });
-
     gsap.utils.toArray(".animate-on-scroll").forEach(element => {
       gsap.from(element, {
         y: 100,
@@ -192,7 +180,7 @@ const App_claude = () => {
       });
     });
 
-    // Client logos fading in on scroll. Using timeline for better control over sequencing
+    // Client grid animation. logos fading in on scroll. Using timeline for better control over sequencing
     let tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".clients-grid",
@@ -200,6 +188,24 @@ const App_claude = () => {
       }
     });
     tl.from(".client-item", {
+      y: 30,
+      opacity: 0,
+      duration: 0.5,
+      ease: "power2.out",
+      stagger: {
+        amount: 1.5,  // Total time to stagger all items
+        from: "start"
+      }
+    });
+
+    // Work grid animation
+    tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".work-grid",
+        start: "top 80%"
+      }
+    });
+    tl.from(".work-item", {
       y: 30,
       opacity: 0,
       duration: 0.5,
@@ -276,14 +282,14 @@ const App_claude = () => {
         {/* Hero Section */}
         <section
           ref={heroRef}
-          className=" min-h-screen flex items-center justify-center relative overflow-hidden"
+          className="min-h-screen flex items-center justify-center relative overflow-hidden"
         >
           <div className="absolute inset-0 bg-bgmain"></div>
 
           {/* Animated background elements */}
           <div
-            className="float-animate absolute top-20 right-20 w-32 h-32 border-2 "
-            style={{ borderColor: "#ED2E2D" }}
+            className="float-animate absolute top-20 right-20 w-32 h-32 border-2 border-primary"
+
           ></div>
           <div
             className="pulse-animate absolute bottom-32 left-16 bg-secondary w-24 h-24 "
@@ -293,7 +299,8 @@ const App_claude = () => {
           {/* Animated hero lines */}
           <div className="relative z-10 text-center px-6">
             <div ref={heroTextRef}>
-              <h1 className="hero-title text-6xl md:text-8xl lg:text-9xl font-anton text-left font-bgmain mb-8 leading-tight">
+              <h1 className="text-6xl md:text-8xl lg:text-9xl 
+                font-anton text-left mb-8 leading-tight">
                 <div className="hero-line" style={{ color: "#ED2E2D" }}>CREATIVE.</div>
                 <div className="hero-line" style={{ color: "#EACF74" }}>IMPACTFUL.</div>
                 <div className="hero-line text-whitetwo">DIRECTIONAL.</div>
@@ -320,8 +327,9 @@ const App_claude = () => {
         <section ref={aboutRef} className="min-h-screen py-20 px-6 font-anton">
           <div className="max-w-7xl mx-auto">
             <h2
-              className="section-heading text-5xl md:text-7xl font-bgmain mb-16 text-center animate-on-scroll"
-              style={{ color: "#ED2E2D" }}
+              className="text-5xl md:text-7xl lg:text-8xl 
+                text-primary mb-16 text-center 
+                animate-on-scroll"
             >
               ABOUT US
             </h2>

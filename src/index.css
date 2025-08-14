@@ -4,18 +4,7 @@
 
 
 
-/* For responsive design. this overrides tailwind. */
-.hero-title {
-  font-size: clamp(3rem, 8vw, 9rem);
-}
 
-.section-heading {
-  font-size: clamp(2.5rem, 6vw, 7rem);
-}
-
-.body-text {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-}
 
 @font-face {
   font-family: 'Monument Extended';
