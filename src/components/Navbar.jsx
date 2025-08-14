@@ -4,11 +4,12 @@ import DishaLogo from "/src/assets/disha-logo copy 2.svg";
 
 const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => {
   const navbarRef = useRef(null);
-  const { heroRef, aboutRef, workRef, clientsRef, contactRef } = refs;
+  const { heroRef, aboutRef, capabilitiesRef, workRef, clientsRef, contactRef } = refs;
 
   const navItems = [
     { label: 'HOME', ref: heroRef },
     { label: 'ABOUT', ref: aboutRef },
+    { label: 'SERVICES', ref: capabilitiesRef },
     { label: 'WORK', ref: workRef },
     { label: 'CLIENTS', ref: clientsRef },
     { label: 'CONTACT', ref: contactRef },

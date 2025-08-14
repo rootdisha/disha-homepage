@@ -5,12 +5,12 @@ import StatItem from './StatItem';
 const StatsGrid = () => {
   const stats = [
     {
-      value: "150+",
+      value: "50+",
       label: "BRANDS TRANSFORMED",
       color: "#ED2E2D"
     },
     {
-      value: "8",
+      value: "10",
       label: "YEARS EXPERIENCE", 
       color: "#EACF74"
     },

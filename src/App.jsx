@@ -7,11 +7,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import AboutSection from './components/AboutSection';
+import ServicesSection from './components/CapabilitiesSection';
 import WorkSection from './components/WorkSection';
 import ClientsSection from './components/ClientsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import { useScrollAnimations } from './hooks/useScrollAnimations';
+import CapabilitiesSection from './components/CapabilitiesSection';
 
 const App = () => {
   const heroRef = useRef(null);
@@ -19,6 +21,7 @@ const App = () => {
   const workRef = useRef(null);
   const clientsRef = useRef(null);
   const contactRef = useRef(null);
+  const capabilitiesRef = useRef(null);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -50,6 +53,8 @@ const App = () => {
       />
       
       <AboutSection ref={aboutRef} />
+
+      <CapabilitiesSection ref={capabilitiesRef} />
       
       <WorkSection ref={workRef} />
       
