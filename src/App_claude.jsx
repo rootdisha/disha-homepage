@@ -105,17 +105,16 @@ const App_claude = () => {
 
     // Instead of CSS keyframes - Hero text animation
     herotl.from(".hero-line", {
-      // y: 150,
-      x: 150,
+      x: 50,
       opacity: 0,
       duration: 0.5,
       ease: "back.out",
       stagger: 0.2,
     }).from(".navbar", {
-      y: -150,
+      y: -50,
       opacity: 0,
       duration: 1,
-      ease: "back.out",
+      ease: "power3.out",
       stagger: 0.2,
     });
 
