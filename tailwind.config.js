@@ -8,7 +8,9 @@ export default {
     extend: {
       colors: {
         primary: '#ED2E2D',
+        primarytwo: '#D51312',
         secondary: '#EACF74',
+        secondarytwo: '#E3C048',
         tbd: '#aaaaaa', // parts marked as TBD
         bgmain: '#2D2C2E', // main background
         bgother: '#464548',  // nav bar

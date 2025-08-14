@@ -7,7 +7,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import AboutSection from './components/AboutSection';
-import ServicesSection from './components/CapabilitiesSection';
 import WorkSection from './components/WorkSection';
 import ClientsSection from './components/ClientsSection';
 import ContactSection from './components/ContactSection';
@@ -54,7 +53,7 @@ const App = () => {
       
       <AboutSection ref={aboutRef} />
 
-      <CapabilitiesSection ref={capabilitiesRef} />
+      <CapabilitiesSection ref={capabilitiesRef} /> 
       
       <WorkSection ref={workRef} />
       
