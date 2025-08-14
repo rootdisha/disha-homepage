@@ -5,7 +5,6 @@ import { useGSAP } from "@gsap/react";
 
 import DishaLogo from "/src/assets/disha-logo copy 2.svg";
 
-gsap.registerPlugin(ScrollTrigger);
 
 
 const App_claude = () => {
@@ -83,6 +82,12 @@ const App_claude = () => {
   ];
 
   useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    // Create responsive animation values
+    const getAnimationDistance = () => {
+      return window.innerWidth < 768 ? 50 : 100; // Smaller values for mobile
+    };
+
     // Mobile menu animations
     if (mobileMenuOpen) {
       gsap.fromTo(".mobile-menu", 
@@ -143,14 +148,18 @@ const App_claude = () => {
 
     gsap.utils.toArray(".animate-on-scroll").forEach(element => {
       gsap.from(element, {
-        y: 100,
+        y: getAnimationDistance(),
         opacity: 0,
         duration: 0.8,
         ease: "power2.out",
         scrollTrigger: {
-          trigger: element,  
-          start: "top 80%",
-          toggleActions: "play none none reverse"
+          trigger: element,
+          start: "top 85%", // Earlier trigger on mobile
+          end: "bottom 15%",
+          toggleActions: "play none none reverse",
+          // Add this for debugging
+          markers: false, // Set to true for debugging
+          onToggle: self => console.log("toggled, isActive:", self.isActive),
         }
       });
     });
@@ -205,12 +214,12 @@ const App_claude = () => {
       }
     });
     tl.from(".client-item", {
-      y: 30,
+      y: window.innerWidth < 768 ? 20 : 30,
       opacity: 0,
       duration: 0.5,
       ease: "power2.out",
       stagger: {
-        amount: 1.5,  // Total time to stagger all items
+        amount: window.innerWidth < 768 ? 1 : 1.5,  // Total time to stagger all items
         from: "start"
       }
     });
@@ -223,12 +232,12 @@ const App_claude = () => {
       }
     });
     tl.from(".work-item", {
-      y: 30,
+      y: window.innerWidth < 768 ? 20 : 30,
       opacity: 0,
       duration: 0.5,
       ease: "power2.out",
       stagger: {
-        amount: 1.5,  // Total time to stagger all items
+        amount: window.innerWidth < 768 ? 1 : 1.5,  // Total time to stagger all items
         from: "start"
       }
     });
