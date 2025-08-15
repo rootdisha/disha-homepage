@@ -10,6 +10,12 @@ const SecureEmailButton = ({ color }) => {
     tld: 'com'
   };
 
+  const phoneParts = {
+    code: '+91',
+    half1: '76672',
+    half2: '526226'
+  };
+
   const revealAndContact = () => {
     const email = `${emailParts.user}@${emailParts.domain}.${emailParts.tld}`;
     setShowEmail(true);
@@ -22,7 +28,7 @@ const SecureEmailButton = ({ color }) => {
 
   return (
     <div className="text-center animate-on-scroll hover-lift">
-      <div className="text-2xl font-bold mb-4" style={{ color }}>
+<div className="text-2xl font-bold mb-4" style={{ color }}>
         EMAIL
       </div>
       {showEmail ? (

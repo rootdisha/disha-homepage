@@ -1,14 +1,14 @@
 
 import React, { forwardRef } from 'react';
 import ContactInfo from './ContactInfo';
-import ContactForm from './ContactForm'; // We'll create this
+import ContactForm from './ContactForm'; 
+import SecureEmailButton from './SecureEmailButton'; // TBD: use for better contact data management
 
 const ContactSection = forwardRef((props, ref) => {
   const contactData = [
     {
       title: "EMAIL",
       value: "client [at] dishamedias [dot] com",
-      // value: "Click to Email Us",
       color: "#ED2E2D",
       type: "email"
     },
