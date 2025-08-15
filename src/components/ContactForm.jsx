@@ -115,9 +115,11 @@ const ContactForm = () => {
       </div>
 
       {/* Submit Button */}
+      {/* Submit disabled till mail backend hook is done. */}
       <button
         type="submit"
-        disabled={isSubmitting}
+        // disabled={isSubmitting}
+        disabled
         className="w-full bg-primary hover:bg-red-700 text-white px-8 py-4 
                    text-lg font-bold transition-all duration-300 rounded-lg
                    disabled:opacity-50 disabled:cursor-not-allowed"
