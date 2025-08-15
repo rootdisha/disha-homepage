@@ -38,7 +38,7 @@ export const useScrollAnimations = (mobileMenuOpen) => {
         ease: "back.out",
         stagger: 0.2,
       })
-      .from(".navbar", {  // don't animate navbar. doesnt go well with hamburger.
+      .from(".navbar", {  
         y: -50,
         opacity: 0,
         duration: 0.5,
