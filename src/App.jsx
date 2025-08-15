@@ -28,8 +28,14 @@ const App = () => {
   useScrollAnimations(mobileMenuOpen);
 
   const scrollToSection = (ref) => {
-    ref.current?.scrollIntoView({ behavior: "smooth" });
-    setMobileMenuOpen(false);
+    // Add error checking
+    if (ref && ref.current) {
+      console.log('Valid ref:', ref)
+      ref.current.scrollIntoView({ behavior: "smooth" });
+      setMobileMenuOpen(false);
+    } else {
+      console.error('Ref is null or undefined:', ref);
+    }
   };
 
   const toggleMobileMenu = () => {
