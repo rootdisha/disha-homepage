@@ -5,60 +5,7 @@ import gsap from 'gsap';
 import DishaLogo from "/src/assets/disha-logo copy 2.svg";
 
 
-// Alternative hamburger animations - choose your style
 
-// 1. MORPHING HAMBURGER (Recommended)
-const MorphingHamburger = ({ isOpen, onClick }) => {
-  const hamburgerRef = useRef(null);
-  
-  useGSAP(() => {
-    const lines = hamburgerRef.current?.querySelectorAll('.morph-line');
-    if (!lines || lines.length !== 3) return;
-
-    const [line1, line2, line3] = lines;
-    
-    const tl = gsap.timeline({ paused: true });
-    
-    tl.to(line1, {
-      rotation: 45,
-      y: 8,
-      backgroundColor: "#ED2E2D",
-      duration: 0.4,
-      ease: "back.out(1.7)"
-    }, 0)
-    .to(line3, {
-      rotation: -45, 
-      y: -8,
-      backgroundColor: "#ED2E2D",
-      duration: 0.4,
-      ease: "back.out(1.7)"
-    }, 0)
-    .to(line2, {
-      scaleX: 0,
-      opacity: 0,
-      duration: 0.3,
-      ease: "power2.out"
-    }, 0.1);
-
-    if (isOpen) {
-      tl.play();
-    } else {
-      tl.reverse();
-    }
-  }, [isOpen]);
-
-  return (
-    <button 
-      ref={hamburgerRef}
-      onClick={onClick}
-      className="w-12 h-12 flex flex-col justify-center items-center focus:outline-none group"
-    >
-      <span className="morph-line block w-7 h-0.5 bg-whitetwo mb-1.5"></span>
-      <span className="morph-line block w-7 h-0.5 bg-whitetwo mb-1.5"></span>
-      <span className="morph-line block w-7 h-0.5 bg-whitetwo"></span>
-    </button>
-  );
-};
 
 const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => {
   const navbarRef = useRef(null);
@@ -111,7 +58,7 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
     if (!line1 || !line2 || !line3) return;
 
     // Create timeline for hamburger transformation
-    let hamburgerTl = htlsave ? 
+    const hamburgerTl = htlsave ? 
                   htlsave : // if hamburger saved, use it to maintain proper effects
                   gsap.timeline({ paused: true });
     
