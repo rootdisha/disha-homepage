@@ -75,6 +75,33 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
     { label: 'CONTACT', ref: contactRef },
   ];
 
+  // Enhanced mobile menu click handler with debugging
+  const handleMobileMenuItemClick = (itemRef, label) => {
+    console.log(`Mobile menu item clicked: ${label}`);
+    
+    // // Debug first
+    // debugNavigation(itemRef, label);
+    
+    // Close the mobile menu
+    toggleMobileMenu();
+    
+    // Try immediate scroll first
+    if (itemRef?.current) {
+      console.log('Attempting immediate scroll...');
+      scrollToSection(itemRef);
+    }
+    
+    // Also try with delay as backup
+    setTimeout(() => {
+      console.log('Attempting delayed scroll...');
+      if (itemRef?.current) {
+        scrollToSection(itemRef);
+      } else {
+        console.error('Ref still not available after delay');
+      }
+    }, 300);
+  };
+
   // GSAP animations for hamburger menu
   useGSAP(() => {
     const line1 = hamburgerRef.current?.querySelector('.line-1');
@@ -138,9 +165,12 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
     if (mobileMenuOpen) {
       hamburgerTl.play();
       menuTl.play();
+      console.log("mobileMenuOpen : hamburger play")
     } else {
       hamburgerTl.reverse();
       menuTl.reverse();
+      console.log("mobileMenuOpen : hamburger reverse")
+
     }
 
     // Store timelines for cleanup
@@ -220,12 +250,12 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
         style={{ height: mobileMenuOpen ? 'auto' : '0' }}
       >
         {/* Menu Overlay */}
-        <div className="menu-overlay bg-bgother/98 backdrop-blur-lg border-t border-gray-700 shadow-2xl">
+        <div className="menu-overlay bg-bgother/95 backdrop-blur-lg border-t border-gray-700 shadow-2xl">
           <div className="px-6 py-8 space-y-6">
             {navItems.map((item, index) => (
               <button
                 key={item.label}
-                onClick={() => scrollToSection(item.ref)}
+                onClick={() => handleMobileMenuItemClick(item.ref, item.label)}
                 className="mobile-menu-item block w-full text-left text-whitetwo hover:text-secondary transition-all duration-300 font-bold py-4 text-xl border-b border-gray-800 hover:border-red-600 hover:pl-4 group"
                 style={{
                   borderBottomColor: index === navItems.length - 1 ? 'transparent' : '#374151'

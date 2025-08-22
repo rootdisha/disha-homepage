@@ -18,17 +18,17 @@ export const useScrollAnimations = (mobileMenuOpen) => {
     const herotl = gsap.timeline();
 
     // Mobile menu animations
-    if (mobileMenuOpen) {
-      gsap.fromTo(
-        ".mobile-menu",
-        { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
-      );
-      gsap.fromTo(
-        ".mobile-menu-item",
-        { opacity: 0, x: -30 },
-        { opacity: 1, x: 0, duration: 0.3, stagger: 0.1, ease: "power2.out" }
-      );
+    if (false) { // mobileMenuOpen
+      // gsap.fromTo(
+      //   ".mobile-menu",
+      //   { opacity: 0, y: -20 },
+      //   { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
+      // );
+      // gsap.fromTo(
+      //   ".mobile-menu-item",
+      //   { opacity: 0, x: -30 },
+      //   { opacity: 1, x: 0, duration: 0.3, stagger: 0.1, ease: "power2.out" }
+      // );
     } else {
       // Hero animations
       herotl.from(".hero-line", {
