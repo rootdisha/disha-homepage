@@ -15,35 +15,77 @@ export const useScrollAnimations = (mobileMenuOpen) => {
 
     // Helper function for responsive values
     const getAnimationDistance = () => window.innerWidth < 768 ? 50 : 100;
+    const herotl = gsap.timeline();
 
-    // Mobile menu animations
-    if (mobileMenuOpen) {
-      gsap.fromTo(".mobile-menu", 
-        { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
-      );
-      gsap.fromTo(".mobile-menu-item",
-        { opacity: 0, x: -30 },
-        { opacity: 1, x: 0, duration: 0.3, stagger: 0.1, ease: "power2.out" }
-      );
+    if (!mobileMenuOpen) {
+      // Hero animations
+      herotl.from(".hero-line", {
+        x: 50,
+        opacity: 0,
+        duration: 0.5,
+        ease: "back.out",
+        stagger: 0.2,
+      });
+
+      // Delayed scroll animations
+      gsap.delayedCall(0.1, () => {
+        // General scroll animations
+        gsap.utils.toArray(".animate-on-scroll").forEach((element) => {
+          gsap.from(element, {
+            y: getAnimationDistance(),
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: element,
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play none none reverse",
+            },
+          });
+        });
+
+        // Client grid animation
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: ".clients-grid",
+              start: "top 90%",
+            },
+          })
+          .from(".client-item", {
+            y: window.innerWidth < 768 ? 20 : 30,
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.out",
+            stagger: {
+              amount: window.innerWidth < 768 ? 1 : 1.5,
+              from: "start",
+            },
+          });
+
+        // Work grid animation
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: ".work-grid",
+              start: "top 90%",
+            },
+          })
+          .from(".work-item", {
+            y: window.innerWidth < 768 ? 20 : 30,
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.out",
+            stagger: {
+              amount: window.innerWidth < 768 ? 1 : 1.5,
+              from: "start",
+            },
+          });
+      });
     }
 
-    // Hero animations
-    const herotl = gsap.timeline();
-    herotl.from(".hero-line", {
-      x: 50,
-      opacity: 0,
-      duration: 0.5,
-      ease: "back.out",
-      stagger: 0.2,
-    }).from(".navbar", {
-      y: -50,
-      opacity: 0,
-      duration: 1,
-      ease: "power3.out",
-      stagger: 0.2,
-    });
-
+ 
     // Background animations
     herotl.to(".float-animate", {
       y: -20,
@@ -71,59 +113,6 @@ export const useScrollAnimations = (mobileMenuOpen) => {
       repeat: -1,
     });
 
-    // Delayed scroll animations
-    gsap.delayedCall(0.1, () => {
-      // General scroll animations
-      gsap.utils.toArray(".animate-on-scroll").forEach(element => {
-        gsap.from(element, {
-          y: getAnimationDistance(),
-          opacity: 0,
-          duration: 0.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: element,
-            start: "top 85%",
-            end: "bottom 15%",
-            toggleActions: "play none none reverse",
-          }
-        });
-      });
-
-      // Client grid animation
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: ".clients-grid",
-          start: "top 90%"
-        }
-      }).from(".client-item", {
-        y: window.innerWidth < 768 ? 20 : 30,
-        opacity: 0,
-        duration: 0.5,
-        ease: "power2.out",
-        stagger: {
-          amount: window.innerWidth < 768 ? 1 : 1.5,
-          from: "start"
-        }
-      });
-
-      // Work grid animation
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: ".work-grid",
-          start: "top 90%"
-        }
-      }).from(".work-item", {
-        y: window.innerWidth < 768 ? 20 : 30,
-        opacity: 0,
-        duration: 0.5,
-        ease: "power2.out",
-        stagger: {
-          amount: window.innerWidth < 768 ? 1 : 1.5,
-          from: "start"
-        }
-      });
-    });
-
     // Hover effects
     const setupHoverEffects = () => {
       gsap.set(".hover-lift", { transformOrigin: "center bottom" });
@@ -147,8 +136,8 @@ export const useScrollAnimations = (mobileMenuOpen) => {
         });
       });
     };
-
     setupHoverEffects();
+    
     ScrollTrigger.refresh();
 
   }, [mobileMenuOpen]);
