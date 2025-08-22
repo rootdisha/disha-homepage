@@ -1,5 +1,5 @@
 // components/Navbar.jsx - Enhanced with GSAP hamburger animation
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { useGSAP } from "@gsap/react";
 import gsap from 'gsap';
 import DishaLogo from "/src/assets/disha-logo copy 2.svg";
@@ -65,6 +65,7 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
   const hamburgerRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const { heroRef, aboutRef, capabilitiesRef, workRef, clientsRef, contactRef } = refs;
+  const [htlsave, setHtlsave] = useState(null);
 
   const navItems = [
     { label: 'HOME', ref: heroRef },
@@ -78,9 +79,6 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
   // Enhanced mobile menu click handler with debugging
   const handleMobileMenuItemClick = (itemRef, label) => {
     console.log(`Mobile menu item clicked: ${label}`);
-    
-    // // Debug first
-    // debugNavigation(itemRef, label);
     
     // Close the mobile menu
     toggleMobileMenu();
@@ -113,7 +111,9 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
     if (!line1 || !line2 || !line3) return;
 
     // Create timeline for hamburger transformation
-    const hamburgerTl = gsap.timeline({ paused: true });
+    let hamburgerTl = htlsave ? 
+                  htlsave : // if hamburger saved, use it to maintain proper effects
+                  gsap.timeline({ paused: true });
     
     hamburgerTl
       .to(line1, {
@@ -177,19 +177,10 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
     return () => {
       hamburgerTl.kill();
       menuTl.kill();
+      setHtlsave(hamburgerTl);
     };
     
   }, [mobileMenuOpen]);
-
-  // Enhanced toggle with haptic feedback (if supported)
-  const handleToggle = () => {
-    // Add haptic feedback for mobile devices
-    if (navigator.vibrate) {
-      navigator.vibrate(50);
-    }
-    
-    toggleMobileMenu();
-  };
 
   return (
     <nav
@@ -226,7 +217,7 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
         {/* Enhanced GSAP Hamburger Button */}
         <button
           ref={hamburgerRef}
-          onClick={handleToggle}
+          onClick={toggleMobileMenu}
           className="md:hidden relative w-12 h-12 flex flex-col justify-center items-center focus:outline-none hover-lift group"
           aria-label="Toggle mobile menu"
         >
