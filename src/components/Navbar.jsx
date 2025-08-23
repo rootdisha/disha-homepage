@@ -2,9 +2,8 @@
 import React, { useRef, useState } from 'react';
 import { useGSAP } from "@gsap/react";
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import DishaLogo from "/src/assets/disha-logo copy 2.svg";
-
-
 
 
 const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => {
@@ -13,6 +12,7 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
   const mobileMenuRef = useRef(null);
   const { heroRef, aboutRef, capabilitiesRef, workRef, clientsRef, contactRef } = refs;
   const [htlsave, setHtlsave] = useState(null);
+  console.log("htlsave 1 :", htlsave);
 
   const navItems = [
     { label: 'HOME', ref: heroRef },
@@ -49,6 +49,8 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
 
   // GSAP animations for hamburger menu
   useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
     const line1 = hamburgerRef.current?.querySelector('.line-1');
     const line2 = hamburgerRef.current?.querySelector('.line-2');
     const line3 = hamburgerRef.current?.querySelector('.line-3');
@@ -57,11 +59,13 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
 
     if (!line1 || !line2 || !line3) return;
 
+    console.log("htlsave 2 :", htlsave);
+
     // Create timeline for hamburger transformation
     const hamburgerTl = htlsave ? 
                   htlsave : // if hamburger saved, use it to maintain proper effects
                   gsap.timeline({ paused: true });
-    
+    setHtlsave(hamburgerTl);
     hamburgerTl
       .to(line1, {
         rotation: 45,
@@ -122,9 +126,11 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
 
     // Store timelines for cleanup
     return () => {
+      console.log("htlsave 3, mobileMenuOpen :", htlsave, mobileMenuOpen); 
+      console.log("hamburgerTl :", hamburgerTl);
+      setHtlsave(hamburgerTl);
       hamburgerTl.kill();
       menuTl.kill();
-      setHtlsave(hamburgerTl);
     };
     
   }, [mobileMenuOpen]);
