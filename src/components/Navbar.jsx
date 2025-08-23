@@ -142,17 +142,19 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
-        <div className="flex items-center space-x-3 hover-lift">
-          <div className="relative w-12 h-12">
-            <img src={DishaLogo} alt="Disha Logo" />
+        <button onClick={() => scrollToSection(heroRef)}>
+          <div className="flex items-center space-x-3 hover-lift">
+            <div className="relative w-12 h-12">
+              <img src={DishaLogo} alt="Disha Logo" />
+            </div>
+            <div
+              className="text-xl font-bgmain font-hypesunset"
+              style={{ color: "#ED2E2D" }}
+            >
+              Disha Medias
+            </div>
           </div>
-          <div
-            className="text-xl font-bgmain font-hypesunset"
-            style={{ color: "#ED2E2D" }}
-          >
-            Disha Medias
-          </div>
-        </div>
+        </button>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-8">
