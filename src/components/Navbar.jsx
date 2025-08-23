@@ -143,7 +143,7 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <button onClick={() => scrollToSection(heroRef)}>
-          <div className="flex items-center space-x-3 hover-lift">
+          <div className="flex items-center space-x-3">
             <div className="relative w-12 h-12">
               <img src={DishaLogo} alt="Disha Logo" />
             </div>
@@ -173,7 +173,7 @@ const Navbar = ({ scrollToSection, mobileMenuOpen, toggleMobileMenu, refs }) => 
         <button
           ref={hamburgerRef}
           onClick={toggleMobileMenu}
-          className="md:hidden relative w-12 h-12 flex flex-col justify-center items-center focus:outline-none hover-lift group"
+          className="md:hidden relative w-12 h-12 flex flex-col justify-center items-center focus:outline-none group"
           aria-label="Toggle mobile menu"
         >
           {/* Line 1 */}
